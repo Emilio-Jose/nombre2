@@ -1,0 +1,31 @@
+--------------------------------------------------------------------------------
+echo "<!DOCTYPE html>
+<html lang=\"es\">
+<head>
+    <meta charset=\"UTF-8\">
+    <title>Información</title>
+</head>
+<body>
+    <h1>Información de Participantes</h1>
+    <ul>
+        <li>Nombre: Juan Pérez, RUT: 12345678-9</li>
+        <li>Nombre: María González, RUT: 98765432-1</li>
+    </ul>
+</body>
+</html>" > index.html
+----------------------------------------------------------------------------------
+git init
+
+git checkout -b Evaluación2
+
+git add index.html
+
+git commit -m "Añadir index.html con nombres y RUT - [Tu Nombre]"
+
+git config --global user.name "Tu Nombre"
+git config --global user.email "tuemail@example.com"
+
+git remote add origin https://github.com/usuario/EV2.git
+
+git push -u origin Evaluación2
+
