@@ -1,0 +1,39 @@
+mkdir EV2
+cd EV2
+
+mkdir nombre1
+cd nombre1
+
+
+--------------------------------------------------------------------------------------------------
+echo "<!DOCTYPE html>
+<html lang=\"en\">
+<head>
+    <meta charset=\"UTF-8\">
+    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <title>Mi Página Web</title>
+</head>
+<body>
+    <h1>¡Hola, Mundo!</h1>
+    <p>Esta es una página web de ejemplo.</p>
+</body>
+</html>" > index.html
+-----------------------------------------------------------------------------------------------------
+nano Dockerfile
+-----------------------------------------------------------------------------------------------------
+# Utiliza la imagen base de Nginx
+FROM nginx:alpine
+
+# Copia el archivo HTML en el directorio de Nginx
+COPY index.html /usr/share/nginx/html/index.html
+
+# Expone el puerto 5030
+EXPOSE 5030
+
+# Comando para ejecutar Nginx
+CMD ["nginx", "-g", "daemon off;"]
+------------------------------------------------------------------------------------------------------
+
+docker build -t mi-pagina-web
+docker run -d -p 5030:80 --name mi-contenedor-web mi mi-pagina-web
+docker ps
