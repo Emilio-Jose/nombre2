@@ -1,0 +1,63 @@
+import requests
+
+def get_mapquest_data(api_key, from_location, to_location):
+    # Endpoint de la API de MapQuest
+    url = "http://www.mapquestapi.com/directions/v2/route"
+    
+    # Parámetros de la consulta
+    params = {
+        "key": api_key,
+        "from": from_location,
+        "to": to_location,
+        "unit": "k"  # Unidades en kilómetros
+    }
+    
+    # Realizar la solicitud GET
+    response = requests.get(url, params=params)
+    
+    # Validar que la solicitud fue exitosa
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("Error al conectar con la API de MapQuest.")
+        return None
+
+def main():
+    # Ingresar la clave de API de MapQuest
+    api_key = input("Ingrese su clave de API de MapQuest: ")
+
+    while True:
+        # Solicitar al usuario las ubicaciones
+        from_location = input("Ingrese la ubicación de origen: ")
+        to_location = input("Ingrese la ubicación de destino: ")
+
+        # Obtener los datos de la API de MapQuest
+        data = get_mapquest_data(api_key, from_location, to_location)
+        
+        if data:
+            # Extraer y mostrar la distancia en kilómetros
+            distance = data["route"]["distance"]
+            print(f"Distancia: {distance} km")
+            
+            # Extraer y mostrar el tiempo de recorrido
+            time = data["route"]["formattedTime"]
+            print(f"Tiempo de recorrido: {time}")
+            
+            # Extraer y mostrar la narrativa de la ruta (index 0)
+            narrative_0 = data["route"]["legs"][0]["maneuvers"][0]["narrative"]
+            print(f"Narrativa index 0: {narrative_0}")
+            
+            # Extraer y mostrar la narrativa de la ruta (index 2)
+            if len(data["route"]["legs"][0]["maneuvers"]) > 2:
+                narrative_2 = data["route"]["legs"][0]["maneuvers"][2]["narrative"]
+                print(f"Narrativa index 2: {narrative_2}")
+            else:
+                print("No hay suficiente información para la narrativa index 2.")
+        
+        # Preguntar al usuario si desea realizar otra consulta
+        continue_prompt = input("¿Desea realizar otra consulta? (s/n): ")
+        if continue_prompt.lower() != 's':
+            break
+
+if __name__ == "__main__":
+    main()
